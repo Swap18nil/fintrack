@@ -7,21 +7,10 @@ import { fetchRates } from '../../../core/exchange';
 import { supabase } from '../../../core/supabaseClient';
 import type { DisplayTransaction } from '../../../hooks/useTransactions';
 import { useAuthStore } from '../../../store/useAuthStore';
+import { CATEGORIES } from '../../../constant/categories';
 
 
-const CATEGORIES = [
-  'Housing & Utilities',
-  'Food',
-  'Transport',
-  'Medical & Health',
-  'Insurance',
-  'Entertainment & Tech',
-  'Education',
-  'Savings & Investments',
-  'Family Support',
-  'Trip & Travel',
-  'Personal Expenses'
-] as const;
+
 
 const transactionSchema = z.object({
   type: z.enum(['INCOME', 'EXPENSE']),
@@ -173,6 +162,7 @@ export const AddTransactionForm = ({ onSuccess, editingTransaction, onClearEdit 
           {errors.amount && <p className="mt-1 text-sm text-red-600">{errors.amount.message}</p>}
         </div>
 
+        
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
           <select 

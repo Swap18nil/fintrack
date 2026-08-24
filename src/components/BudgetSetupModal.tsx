@@ -1,20 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useBudgets } from '../hooks/useBudgets';
 import { useNavigate } from 'react-router-dom';
+import { CATEGORIES } from '../constant/categories';
 
-const CATEGORIES = [
-  'Entertainment & Tech', 
-  'Utilities', 
-  'Groceries', 
-  'Rent', 
-  'Dining', 
-  'Transport', 
-  'Shopping', 
-  'Health', 
-  'Subscriptions', 
-  'Travel', 
-  'Other'
-];
+
 
 export const BudgetSetupPage = () => {
   const navigate = useNavigate();

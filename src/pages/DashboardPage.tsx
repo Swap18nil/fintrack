@@ -6,20 +6,9 @@ import { TransactionChart } from '../components/layout/transactions/TransationCh
 import { BudgetComparisonCard } from '../components/BudgetComparisonCard';
 import { useBudgets } from '../hooks/useBudgets';
 import { useNavigate } from 'react-router-dom';
+import { CATEGORIES } from '../constant/categories';
 
-const CATEGORIES = [
-  'Housing & Utilities',
-  'Food',
-  'Transport',
-  'Medical & Health',
-  'Insurance',
-  'Entertainment & Tech',
-  'Education',
-  'Savings & Investments',
-  'Family Support',
-  'Trip & Travel',
-  'Personal Expenses'
-] ;
+
 
 export const DashboardPage = () => {
   const [displayCurrency, setDisplayCurrency] = useState('EUR');
