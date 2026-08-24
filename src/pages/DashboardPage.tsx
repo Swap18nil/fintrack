@@ -8,18 +8,18 @@ import { useBudgets } from '../hooks/useBudgets';
 import { useNavigate } from 'react-router-dom';
 
 const CATEGORIES = [
-  'Entertainment & Tech', 
-  'Utilities', 
-  'Groceries', 
-  'Rent', 
-  'Dining', 
-  'Transport', 
-  'Shopping', 
-  'Health', 
-  'Subscriptions', 
-  'Travel', 
-  'Other'
-];
+  'Housing & Utilities',
+  'Food',
+  'Transport',
+  'Medical & Health',
+  'Insurance',
+  'Entertainment & Tech',
+  'Education',
+  'Savings & Investments',
+  'Family Support',
+  'Trip & Travel',
+  'Personal Expenses'
+] ;
 
 export const DashboardPage = () => {
   const [displayCurrency, setDisplayCurrency] = useState('EUR');
