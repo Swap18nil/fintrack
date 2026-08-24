@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { fetchRates } from '../../../core/exchange';
-import type { supabase } from '../../../core/supabaseClient';
+import { supabase } from '../../../core/supabaseClient';
 import type { DisplayTransaction } from '../../../hooks/useTransactions';
 import { useAuthStore } from '../../../store/useAuthStore';
 

@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuthStore } from "../../store/useAuthStore"
-import { LayoutDashboard, ArrowRightLeft, Users, BellRing, LogOut, Wallet } from "lucide-react"
+import { LayoutDashboard, ArrowRightLeft, BellRing, LogOut, Wallet } from "lucide-react"
 import { supabase } from "../../core/supabaseClient"
 
 export const Sidebar = () => {
