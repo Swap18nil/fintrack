@@ -17,7 +17,7 @@ const transactionSchema = z.object({
   amount: z.number().min(0.01, 'Amount must be greater than 0'),
   currency: z.string().min(3).max(3),
   category: z.enum(CATEGORIES),
-  description: z.string().optional(), 
+  description: z.string().optional(),
 });
 
 type TransactionInputs = z.infer<typeof transactionSchema>;
@@ -33,17 +33,19 @@ export const AddTransactionForm = ({ onSuccess, editingTransaction, onClearEdit 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'error' | 'success', text: string } | null>(null);
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<TransactionInputs>({
+  const { register, handleSubmit, reset, watch,setValue, formState: { errors } } = useForm<TransactionInputs>({
     resolver: zodResolver(transactionSchema),
     defaultValues: { type: 'EXPENSE', currency: 'EUR', category: 'Personal Expenses' },
   });
+
+  const transactionType = watch('type');
 
   useEffect(() => {
     if (editingTransaction) {
       reset({
         type: editingTransaction.type,
         amount: editingTransaction.amount,
-        currency: 'EUR', 
+        currency: 'EUR',
         category: (editingTransaction as any).category || 'Personal Expenses',
         description: editingTransaction.description || '',
       });
@@ -51,6 +53,12 @@ export const AddTransactionForm = ({ onSuccess, editingTransaction, onClearEdit 
       reset({ type: 'EXPENSE', currency: 'EUR', category: 'Personal Expenses', description: '', amount: undefined });
     }
   }, [editingTransaction, reset]);
+
+  useEffect(() => {
+  if (transactionType === 'INCOME') {
+    setValue('category', 'Income'); 
+  }
+}, [transactionType, setValue]);
 
   const onSubmit = async (data: TransactionInputs) => {
     if (!user) return;
@@ -66,7 +74,7 @@ export const AddTransactionForm = ({ onSuccess, editingTransaction, onClearEdit 
         type: data.type,
         amount: amountInEur,
         currency: 'EUR',
-        category: data.category,
+        category:  data.category,
         description: data.description || '',
       };
 
@@ -91,8 +99,8 @@ export const AddTransactionForm = ({ onSuccess, editingTransaction, onClearEdit 
       }
 
       reset();
-      if (onSuccess) onSuccess(); 
-      
+      if (onSuccess) onSuccess();
+
     } catch (error: any) {
       setMessage({ type: 'error', text: error.message || 'Failed to save transaction' });
     } finally {
@@ -107,8 +115,8 @@ export const AddTransactionForm = ({ onSuccess, editingTransaction, onClearEdit 
           {editingTransaction ? 'Edit Transaction' : 'Add New Transaction'}
         </h2>
         {editingTransaction && (
-          <button 
-            type="button" 
+          <button
+            type="button"
             onClick={onClearEdit}
             className="text-sm text-gray-500 hover:text-gray-700"
           >
@@ -116,7 +124,7 @@ export const AddTransactionForm = ({ onSuccess, editingTransaction, onClearEdit 
           </button>
         )}
       </div>
-      
+
       {message && (
         <div className={`mb-4 p-3 rounded text-sm ${message.type === 'error' ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}`}>
           {message.text}
@@ -127,8 +135,8 @@ export const AddTransactionForm = ({ onSuccess, editingTransaction, onClearEdit 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-            <select 
-              {...register('type')} 
+            <select
+              {...register('type')}
               className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white"
             >
               <option value="EXPENSE">Expense</option>
@@ -138,8 +146,8 @@ export const AddTransactionForm = ({ onSuccess, editingTransaction, onClearEdit 
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Currency</label>
-            <select 
-              {...register('currency')} 
+            <select
+              {...register('currency')}
               className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white"
             >
               <option value="EUR">EUR (€)</option>
@@ -162,19 +170,25 @@ export const AddTransactionForm = ({ onSuccess, editingTransaction, onClearEdit 
           {errors.amount && <p className="mt-1 text-sm text-red-600">{errors.amount.message}</p>}
         </div>
 
-        
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-          <select 
-            {...register('category')} 
-            className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white"
-          >
-            {CATEGORIES.map((cat) => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
-          {errors.category && <p className="mt-1 text-sm text-red-600">{errors.category.message}</p>}
-        </div>
+        {
+          transactionType === 'EXPENSE' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+              <select
+                {...register('category')}
+                className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white"
+              >
+                {CATEGORIES.map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+              {errors.category && <p className="mt-1 text-sm text-red-600">{errors.category.message}</p>}
+            </div>
+
+          )
+        }
+
+
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Note (Optional)</label>

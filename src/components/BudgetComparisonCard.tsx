@@ -28,6 +28,7 @@ export const BudgetComparisonCard: React.FC<Props> = ({ budgets, isLoading, onOp
           const isOverBudget = item.limit > 0 && item.spent > item.limit;
 
           return (
+            item.category !== 'Income' && (
             <div key={item.category} className="space-y-1">
               <div className="flex justify-between text-sm">
                 <span className="font-medium text-gray-700">{item.category}</span>
@@ -47,6 +48,8 @@ export const BudgetComparisonCard: React.FC<Props> = ({ budgets, isLoading, onOp
                 />
               </div>
             </div>
+            )
+
           );
         })}
       </div>

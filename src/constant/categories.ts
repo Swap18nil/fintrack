@@ -9,5 +9,6 @@ export const CATEGORIES = [
   'Savings & Investments',
   'Family Support',
   'Trip & Travel',
-  'Personal Expenses'
+  'Personal Expenses',
+  'Income'
 ] ;

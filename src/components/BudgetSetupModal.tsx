@@ -56,6 +56,7 @@ export const BudgetSetupPage = () => {
 
       <form onSubmit={handleSave} className="space-y-4">
         {budgets.map((item) => (
+          item.category !== 'Income' &&(
           <div key={item.category} className="flex items-center justify-between gap-4 py-2 border-b border-gray-50">
             <label className="text-sm font-medium text-gray-700 w-1/2">{item.category}</label>
             <div className="relative w-1/2">
@@ -70,6 +71,8 @@ export const BudgetSetupPage = () => {
               />
             </div>
           </div>
+          )
+
         ))}
 
         <div className="flex justify-end gap-3 pt-6 border-t border-gray-100 mt-6">
