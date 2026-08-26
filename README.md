@@ -52,5 +52,5 @@ VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
 4. Run the development server
 npm run dev
 
-👤 Author
-Swapnil Sanap
+---
+
